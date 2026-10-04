@@ -60,3 +60,55 @@ plot_metric("gross_investment", "Gross Investment",
             "Model investment", "09_gross_investment.png")
 
 print("Figures regenerated in:", FIG)
+
+
+# Scenario workflow
+fig, ax = plt.subplots(figsize=(12, 6.5))
+ax.axis("off")
+ax.set_xlim(0, 1)
+ax.set_ylim(0, 1)
+
+stages = [
+    (0.12, 0.70, "Temperature\nconstraint"),
+    (0.38, 0.70, "DICE 2023\noptimization"),
+    (0.64, 0.70, "Climate\nresponse"),
+    (0.88, 0.70, "Economic\nresponse"),
+]
+
+for x, y, label in stages:
+    ax.text(
+        x, y, label,
+        ha="center", va="center",
+        fontsize=14,
+        bbox=dict(boxstyle="round,pad=0.65", fc="white", ec="black", lw=1.5)
+    )
+
+for x1, x2 in [(0.20, 0.29), (0.46, 0.55), (0.72, 0.79)]:
+    ax.annotate(
+        "", xy=(x2, 0.70), xytext=(x1, 0.70),
+        arrowprops=dict(arrowstyle="->", lw=2)
+    )
+
+ax.text(
+    0.64, 0.31,
+    "Temperature\nCO₂ emissions\nAtmospheric concentration\nEmissions control rate",
+    ha="center", va="center", fontsize=11,
+    bbox=dict(boxstyle="round,pad=0.55", fc="white", ec="0.55")
+)
+
+ax.text(
+    0.88, 0.31,
+    "Social cost of carbon\nCarbon price\nGross output\nConsumption\nInvestment",
+    ha="center", va="center", fontsize=11,
+    bbox=dict(boxstyle="round,pad=0.55", fc="white", ec="0.55")
+)
+
+ax.annotate("", xy=(0.64, 0.43), xytext=(0.64, 0.60),
+            arrowprops=dict(arrowstyle="->", lw=1.5))
+ax.annotate("", xy=(0.88, 0.43), xytext=(0.88, 0.60),
+            arrowprops=dict(arrowstyle="->", lw=1.5))
+
+ax.set_title("DICE 2023 Temperature Limit Scenario Analysis Workflow", fontsize=18, pad=22)
+fig.tight_layout()
+fig.savefig(FIG / "00_scenario_workflow.png", dpi=240, bbox_inches="tight")
+plt.close(fig)
